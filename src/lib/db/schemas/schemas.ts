@@ -237,3 +237,20 @@ export const setMenus = sqliteTable("set_menus", {
   items: text("items").notNull().default("[]"), // JSON string array
   active: integer("active", { mode: "boolean" }).notNull().default(true),
 });
+
+export const schema = {
+  staff,
+  categories,
+  menuItems,
+  modifierGroups,
+  modifierOptions,
+  tables,
+  orders,
+  orderItems,
+  payments,
+  inventory,
+  settings,
+  customers,
+  campaigns,
+  setMenus,
+};

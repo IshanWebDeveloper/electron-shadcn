@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { generateUuid } from "@/lib/crypto";
 import { clients } from "@/lib/db/schemas/clients";
-import { db } from "../db_client";
+import { db } from "../db-client";
 
 export interface CreateClient {
   email: string;

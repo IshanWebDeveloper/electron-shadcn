@@ -1,5 +1,5 @@
-import * as clients from "./schemas/clients";
+import { clients } from "./schemas/clients";
 
 export const schema = {
-  ...clients,
+  clients,
 };

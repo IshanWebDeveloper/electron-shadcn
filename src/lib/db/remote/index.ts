@@ -3,7 +3,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { app } from "electron";
 import postgres from "postgres";
-import { dbUrl } from "../db_consts";
+import { dbUrl } from "../db-consts";
 import { getDb } from "../index"; // SQLite local DB
 import {
   campaigns as localCampaigns,

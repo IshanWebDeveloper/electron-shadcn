@@ -191,10 +191,10 @@ function KitchenTicketCard({
         </div>
 
         <div className="mb-8 space-y-4">
-          {kot.items.map((item, idx) => (
+          {kot.items.map((item) => (
             <div
               className="group/item flex items-start justify-between"
-              key={idx}
+              key={item.id}
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-5 w-5 items-center justify-center rounded bg-white/5 font-black text-[10px] text-primary">

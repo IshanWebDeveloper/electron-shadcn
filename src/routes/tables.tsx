@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/style/noNestedTernary: <explanation> */
+/** biome-ignore-all lint/style/noNestedTernary: table-card status classes use compact ternary mapping */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createFileRoute,

@@ -4,7 +4,7 @@ import { drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import { app } from "electron";
 import { syncToRemote } from "./remote/index";
-import * as schema from "./schemas/schemas";
+import { schema } from "./schemas/schemas";
 import { seedDatabase } from "./seed";
 
 let _db: ReturnType<typeof drizzle> | null = null;

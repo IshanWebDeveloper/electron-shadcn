@@ -1,4 +1,4 @@
-import type { CreateClient } from "@/lib/db/queries/clients_queries";
+import type { CreateClient } from "@/lib/db/queries/clients-queries";
 import {
   CREATE_NEW_CLIENT,
   DELETE_CLIENT,

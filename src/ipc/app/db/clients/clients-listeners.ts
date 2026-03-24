@@ -4,7 +4,7 @@ import {
   createNewClient,
   deleteClient,
   getAllClients,
-} from "@/lib/db/queries/clients_queries";
+} from "@/lib/db/queries/clients-queries";
 import type { Client } from "@/lib/types/client";
 import {
   CREATE_NEW_CLIENT,

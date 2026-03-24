@@ -30,7 +30,7 @@ interface StaffLineProps {
   name: string;
   orders: number;
   progress: number;
-  role: string;
+  staffRole: string;
 }
 
 export const Route = createFileRoute("/")({
@@ -166,9 +166,24 @@ function DashboardPage() {
               Staff Performance
             </h3>
             <div className="space-y-6">
-              <StaffLine name="Admin User" orders={12} progress={85} />
-              <StaffLine name="John Doe" orders={8} progress={60} />
-              <StaffLine name="Jane Smith" orders={15} progress={90} />
+              <StaffLine
+                name="Admin User"
+                orders={12}
+                progress={85}
+                staffRole="Manager"
+              />
+              <StaffLine
+                name="John Doe"
+                orders={8}
+                progress={60}
+                staffRole="Cashier"
+              />
+              <StaffLine
+                name="Jane Smith"
+                orders={15}
+                progress={90}
+                staffRole="Server"
+              />
             </div>
             <Button
               className="mt-8 h-12 w-full rounded-xl border border-white/5 bg-white/5 font-black text-[10px] text-white uppercase tracking-widest hover:bg-white/10"
@@ -190,22 +205,30 @@ function DashboardPage() {
             </p>
 
             <div className="flex flex-1 items-end justify-between gap-2 px-2">
-              {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
+              {[
+                { height: 40, hour: "10h", isPeak: false },
+                { height: 70, hour: "11h", isPeak: false },
+                { height: 45, hour: "12h", isPeak: false },
+                { height: 90, hour: "13h", isPeak: true },
+                { height: 65, hour: "14h", isPeak: false },
+                { height: 80, hour: "15h", isPeak: false },
+                { height: 50, hour: "16h", isPeak: false },
+              ].map((slot) => (
                 <div
                   className="group flex flex-1 flex-col items-center gap-2"
-                  key={i}
+                  key={slot.hour}
                 >
                   <div
                     className={cn(
                       "w-full origin-bottom rounded-t-lg transition-all duration-500 group-hover:scale-y-110",
-                      i === 3
+                      slot.isPeak
                         ? "bg-primary"
                         : "bg-white/10 group-hover:bg-white/20"
                     )}
-                    style={{ height: `${h}%` }}
+                    style={{ height: `${slot.height}%` }}
                   />
                   <span className="font-black text-[8px] text-muted-foreground/30 uppercase">
-                    {10 + i}h
+                    {slot.hour}
                   </span>
                 </div>
               ))}
@@ -249,14 +272,14 @@ function DashboardStatsCard({
   );
 }
 
-function StaffLine({ name, role, orders, progress }: StaffLineProps) {
+function StaffLine({ name, staffRole, orders, progress }: StaffLineProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-end justify-between">
         <div>
           <p className="font-bold text-white text-xs leading-none">{name}</p>
           <p className="mt-1 font-black text-[9px] text-muted-foreground/40 uppercase tracking-wider">
-            {role}
+            {staffRole}
           </p>
         </div>
         <span className="font-black text-[10px] text-primary italic">
