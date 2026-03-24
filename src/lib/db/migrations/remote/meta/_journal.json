@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1774339184709,
+      "tag": "0000_groovy_mandrill",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1774350600000,
+      "tag": "0001_mellow_sync_patch",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1774353600000,
+      "tag": "0002_calm_customer_ticket",
+      "breakpoints": true
+    }
+  ]
+}

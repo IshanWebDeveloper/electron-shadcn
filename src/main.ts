@@ -1,11 +1,8 @@
+import fs from "node:fs";
 import path from "node:path";
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, session } from "electron";
 import { ipcMain } from "electron/main";
-import {
-  installExtension,
-  REACT_DEVELOPER_TOOLS,
-} from "electron-devtools-installer";
-import { UpdateSourceType, updateElectronApp } from "update-electron-app";
+// import { UpdateSourceType, updateElectronApp } from "update-electron-app";
 import { ipcContext } from "@/ipc/context";
 import { IPC_CHANNELS, inDevelopment } from "./constants";
 import { getBasePath } from "./utils/path";
@@ -40,22 +37,50 @@ function createWindow() {
 }
 
 async function installExtensions() {
+  if (!inDevelopment) {
+    return;
+  }
+
   try {
-    const result = await installExtension(REACT_DEVELOPER_TOOLS);
-    console.log(`Extensions installed successfully: ${result.name}`);
-  } catch {
-    console.error("Failed to install extensions");
+    const configuredDevToolsPath = process.env.REACT_DEVTOOLS_PATH;
+    const reactDevToolsPath =
+      configuredDevToolsPath ??
+      path.join(app.getPath("userData"), "extensions", "react-devtools");
+
+    if (!fs.existsSync(reactDevToolsPath)) {
+      if (configuredDevToolsPath) {
+        console.warn(
+          "React Developer Tools extension path not found at REACT_DEVTOOLS_PATH."
+        );
+      }
+      return;
+    }
+
+    const loadedExtensions =
+      session.defaultSession.extensions.getAllExtensions();
+    const isLoaded = loadedExtensions.some(
+      (extension) => extension.name === "React Developer Tools"
+    );
+
+    if (isLoaded) {
+      return;
+    }
+
+    await session.defaultSession.extensions.loadExtension(reactDevToolsPath);
+    console.log("Extensions installed successfully: React Developer Tools");
+  } catch (error) {
+    console.warn("Failed to install React Developer Tools extension:", error);
   }
 }
 
-function checkForUpdates() {
-  updateElectronApp({
-    updateSource: {
-      type: UpdateSourceType.ElectronPublicUpdateService,
-      repo: "LuanRoger/electron-shadcn",
-    },
-  });
-}
+// function checkForUpdates() {
+//   updateElectronApp({
+//     updateSource: {
+//       type: UpdateSourceType.ElectronPublicUpdateService,
+//       repo: "LuanRoger/electron-shadcn",
+//     },
+//   });
+// }
 
 async function setupORPC() {
   const { rpcHandler } = await import("./ipc/handler");
@@ -68,12 +93,15 @@ async function setupORPC() {
   });
 }
 
+import { initDb } from "./lib/db";
+
 app.whenReady().then(async () => {
   try {
     createWindow();
     await installExtensions();
-    checkForUpdates();
+    // checkForUpdates();
     await setupORPC();
+    await initDb();
   } catch (error) {
     console.error("Error during app initialization:", error);
   }

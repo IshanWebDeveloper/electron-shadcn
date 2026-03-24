@@ -4,6 +4,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["dom", "ESNext"],
+    "types": ["node"],
     "experimentalDecorators": true,
     "composite": true,
     "declaration": true,
@@ -14,6 +15,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "strict": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
@@ -22,5 +24,13 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "./package.json", "./forge.config.ts", "*.mts"]
+  "include": [
+    "scripts/bump-ui.ts",
+    "src/**/*",
+    "./package.json",
+    "./forge.config.ts",
+    "*.mts",
+    "*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
 }
