@@ -11,8 +11,9 @@ function createWindow() {
   const basePath = getBasePath();
   const preload = path.join(basePath, "preload.js");
   const mainWindow = new BrowserWindow({
-    width: 1920,
-    height: 1080,
+    center: true,
+    width: 1280,
+    height: 720,
     webPreferences: {
       devTools: inDevelopment,
       contextIsolation: true,
@@ -25,6 +26,8 @@ function createWindow() {
     trafficLightPosition:
       process.platform === "darwin" ? { x: 5, y: 5 } : undefined,
   });
+
+  mainWindow.maximize();
   ipcContext.setMainWindow(mainWindow);
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {

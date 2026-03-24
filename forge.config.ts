@@ -1,3 +1,4 @@
+import path from "node:path";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
@@ -10,7 +11,19 @@ import type { ForgeConfig } from "@electron-forge/shared-types";
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    asar: {
+      unpack: "**/*.node",
+    },
+
+    ignore: (file: string) => {
+      if (!file) {
+        return false;
+      }
+
+      const includeRoots = ["/.vite", "/node_modules", "/package.json"];
+      return !includeRoots.some((root) => file.startsWith(root));
+    },
+    extraResource: [path.resolve(process.cwd(), "src/lib/db/migrations")],
   },
   rebuildConfig: {},
   makers: [
@@ -28,7 +41,7 @@ const config: ForgeConfig = {
       name: "@electron-forge/publisher-github",
       config: {
         repository: {
-          owner: "LuanRoger",
+          owner: "IshanHettiarachchi",
           name: "electron-shadcn",
         },
         draft: true,

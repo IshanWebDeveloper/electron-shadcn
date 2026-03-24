@@ -1,2 +1,5 @@
-// This is proposital, to make it easier to change the database url, doesn't required a .env file
-export const dbUrl = "postgresql://postgres:postgres@localhost:5432/postgres";
+const fallbackDbUrl = "postgresql://postgres:postgres@localhost:5432/postgres";
+
+// Prioritize explicit environment configuration for packaged deployments.
+export const dbUrl =
+  process.env.KITO_REMOTE_DB_URL ?? process.env.DATABASE_URL ?? fallbackDbUrl;
